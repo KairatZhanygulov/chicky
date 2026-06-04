@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chicky — Готовая куриная грудка. Высокий белок.</title>
+  <meta name="description" content="Chicky — сочная куриная грудка су-вид. 27г белка, 0г сахара, без консервантов. Готова к употреблению. Астана, Казахстан." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --c-bg: #FAFAF9;
+      --c-white: #FFFFFF;
+      --c-text: #111110;
+      --c-secondary: #3D3B38;
+      --c-muted: #78716C;
+      --c-border: #E2E0DC;
+      --c-border-dark: #C8C5BF;
+      --c-surface: #FFFFFF;
+      --c-surface2: #F5F3F0;
+
+      /* Flavor colors — from actual packaging */
+      --c-black-pepper: #E04E1A;   /* orange-red */
+      --c-paprika:      #8B1C1C;   /* deep red */
+      --c-garlic:       #C49A1A;   /* mustard/golden */
+
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
+      --transition: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--sans); background: var(--c-bg); color: var(--c-text); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 16px; left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 1120px;
+      z-index: 100;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.95);
+      border-radius: 100px;
+      padding: 12px 20px 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      transition: var(--transition);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--c-text);
+      text-decoration: none;
+      line-height: 1;
+    }
+
+    .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; color: var(--c-secondary);
+      text-decoration: none; padding: 8px 14px; border-radius: 100px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .nav-links a:hover { background: var(--c-surface2); color: var(--c-text); }
+    .nav-cta {
+      background: var(--c-text) !important; color: #fff !important;
+      padding: 9px 20px !important; border-radius: 100px !important;
+    }
+    .nav-cta:hover { opacity: 0.85 !important; }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--c-text); border-radius: 2px; }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: rgba(255,255,255,0.98); backdrop-filter: blur(20px);
+      z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--serif); font-size: 1.6rem; font-weight: 700;
+      color: var(--c-text); text-decoration: none; padding: 14px 40px;
+      border-radius: 12px; transition: background var(--transition);
+    }
+    .mobile-menu a:hover { background: var(--c-surface2); }
+    .mobile-menu-close { position: absolute; top: 24px; right: 24px; background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--c-text); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 100px;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none;
+      transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--c-text); color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+    .btn-primary:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.22); }
+    .btn-outline { background: transparent; color: var(--c-text); border: 1.5px solid var(--c-border-dark); }
+    .btn-outline:hover { border-color: var(--c-text); background: var(--c-surface2); }
+    .btn-wa { background: #16A34A; color: #fff; box-shadow: 0 4px 20px rgba(22,163,74,0.28); }
+    .btn-wa:hover { box-shadow: 0 8px 32px rgba(22,163,74,0.38); }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 100px 24px; }
+    .container { max-width: 1120px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--sans); font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-muted);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--sans); font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+      color: var(--c-text); margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem; color: var(--c-muted); max-width: 520px; line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    #hero-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Spices photo — full hero background */
+    #hero-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('images/photo-spices.webp');
+      background-size: cover;
+      background-position: center 40%;
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Soft white vignette so edges stay clean */
+    #hero-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, rgba(250,250,249,0.55) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 48px 80px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c-muted);
+      opacity: 0; animation: fadeUp 0.6s 0.05s ease forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 20px; height: 1px; background: var(--c-border-dark); display: block;
+    }
+
+    .hero-title {
+      font-family: var(--sans);
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--c-text);
+      opacity: 0; animation: fadeUp 0.6s 0.18s ease forwards;
+    }
+
+    .hero-sub {
+      font-size: 1rem; font-weight: 400; color: var(--c-muted); line-height: 1.7; max-width: 400px;
+      opacity: 0; animation: fadeUp 0.6s 0.32s ease forwards;
+    }
+
+    .hero-actions {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.6s 0.44s ease forwards;
+    }
+
+    .hero-stats {
+      display: flex; gap: 0;
+      border-top: 1px solid var(--c-border);
+      padding-top: 28px;
+      opacity: 0; animation: fadeUp 0.6s 0.56s ease forwards;
+    }
+    .hero-stat { flex: 1; padding-right: 24px; border-right: 1px solid var(--c-border); margin-right: 24px; }
+    .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .hero-stat-num { font-family: var(--sans); font-size: 1.9rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--c-text); }
+    .hero-stat-label { font-size: 0.72rem; color: var(--c-muted); margin-top: 4px; letter-spacing: 0.04em; }
+
+    /* Hero right — packaging mockup */
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      opacity: 0;
+      animation: fadeUp 0.75s 0.2s ease forwards;
+    }
+
+    .hero-label-card {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 44px 36px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid rgba(0,0,0,0.04);
+    }
+
+    .hero-label-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+
+    .hero-wordmark {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      color: #111;
+    }
+
+    .hero-flavor-square {
+      background: var(--c-black-pepper);
+      border-radius: 6px;
+      padding: 10px 12px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .hero-flavor-square span {
+      display: block;
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .hero-divider {
+      width: 100%; height: 1px; background: #ddd; margin: 20px 0;
+    }
+
+    .hero-macros {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+    .hero-macro {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: #333;
+      font-weight: 400;
+    }
+    .hero-macro-sep {
+      font-size: 0.75rem; color: #bbb; margin: 0 12px;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap { overflow: hidden; padding: 18px 0; background: var(--c-text); }
+    .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+    .marquee-item { font-family: var(--sans); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding: 0 24px; white-space: nowrap; }
+    .marquee-sep { color: rgba(255,255,255,0.2); padding: 0 4px; }
+
+    /* ═══════════════════════════════
+       PRODUCTS
+    ═══════════════════════════════ */
+    #products { background: var(--c-white); }
+
+    .products-header {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+      margin-bottom: 56px; flex-wrap: wrap;
+    }
+
+    .products-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+
+    .product-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: pointer;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.09); }
+
+    /* Label-style top section */
+    .product-label {
+      padding: 28px 28px 24px;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .product-label-top {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+
+    .product-wordmark {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+      color: var(--c-text);
+    }
+
+    .product-flavor-sq {
+      border-radius: 5px;
+      padding: 7px 10px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .product-flavor-sq span {
+      display: block;
+      font-family: var(--sans); font-size: 0.65rem; font-weight: 600; color: #fff; line-height: 1.4;
+    }
+
+    .product-label-divider { width: 100%; height: 1px; background: var(--c-border); margin: 18px 0 0; }
+
+    /* Photo section */
+    .product-photo {
+      width: 100%; aspect-ratio: 16/10; overflow: hidden;
+      position: relative;
+    }
+    .product-photo img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-photo img { transform: scale(1.04); }
+
+    .product-body { padding: 22px 28px 28px; }
+
+    .product-name {
+      font-family: var(--sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--c-muted); margin-bottom: 8px;
+    }
+
+    .product-desc {
+      font-size: 0.875rem; color: var(--c-secondary); line-height: 1.6; margin-bottom: 20px;
+    }
+
+    .product-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.82rem; font-weight: 600; color: var(--c-text); text-decoration: none;
+      border-bottom: 1.5px solid var(--c-text); padding-bottom: 2px;
+      transition: gap var(--transition), opacity var(--transition);
+    }
+    .product-cta:hover { gap: 10px; }
+    .product-cta svg { flex-shrink: 0; }
+
+    /* ═══════════════════════════════
+       NUTRITION — label style
+    ═══════════════════════════════ */
+    #nutrition { background: var(--c-surface2); }
+
+    .nutrition-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+    .nutr-label-card {
+      background: #fff;
+      border: 2px solid var(--c-text);
+      border-radius: 4px;
+      padding: 28px;
+      font-family: var(--sans);
+    }
+
+    .nutr-label-title {
+      font-family: var(--sans); font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.03em; border-bottom: 8px solid var(--c-text); padding-bottom: 6px; margin-bottom: 4px;
+    }
+
+    .nutr-label-sub { font-size: 0.7rem; color: var(--c-secondary); letter-spacing: 0.04em; margin-bottom: 12px; }
+
+    .nutr-label-calories {
+      border-bottom: 4px solid var(--c-text); padding-bottom: 8px; margin-bottom: 8px;
+      display: flex; align-items: baseline; gap: 8px;
+    }
+    .nutr-cal-label { font-size: 0.72rem; color: var(--c-secondary); font-weight: 600; }
+    .nutr-cal-num {
+      font-family: var(--sans); font-size: 3.5rem; font-weight: 700;
+      letter-spacing: -0.05em; line-height: 1; color: var(--c-text);
+    }
+
+    .nutr-label-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid var(--c-border);
+      font-size: 0.875rem;
+    }
+    .nutr-label-row:last-child { border-bottom: none; }
+    .nutr-label-key { font-weight: 600; color: var(--c-text); }
+    .nutr-label-val { color: var(--c-secondary); }
+    .nutr-label-row.major .nutr-label-key { font-size: 0.95rem; }
+    .nutr-label-row.major .nutr-label-val { font-weight: 700; }
+
+    .nutr-label-footer { margin-top: 16px; font-size: 0.68rem; color: var(--c-muted); line-height: 1.5; border-top: 4px solid var(--c-text); padding-top: 10px; }
+
+    .nutrition-right { display: flex; flex-direction: column; gap: 28px; }
+    .nutrition-right .section-sub { max-width: none; }
+
+    .nutr-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .nutr-hl-card {
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      background: #fff;
+      text-align: center;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .nutr-hl-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+
+    .nutr-hl-num {
+      font-family: var(--sans); font-size: 2.4rem; font-weight: 700;
+      letter-spacing: -0.04em; line-height: 1; color: var(--c-text);
+    }
+    .nutr-hl-unit { font-size: 1rem; }
+    .nutr-hl-label { font-size: 0.72rem; color: var(--c-muted); margin-top: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ═══════════════════════════════
+       HOW TO EAT
+    ═══════════════════════════════ */
+    #how { background: var(--c-white); }
+
+    /* ── HOW SECTION ── */
+    #how {
+      background: var(--c-bg);
+      position: relative;
+      overflow: hidden;
+    }
+    #how::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('images/photo-spices.webp');
+      background-size: cover;
+      background-position: center 60%;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+    #how .container { position: relative; z-index: 1; }
+
+    .how-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 72px;
+    }
+    .how-header-left {}
+    .how-header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .how-label-snippet {
+      background: var(--c-white);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--c-muted);
+      white-space: nowrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .how-label-snippet strong { color: var(--c-text); font-weight: 700; }
+    .how-label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-border-dark); flex-shrink: 0; }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 0;
+    }
+    .how-step {
+      padding: 36px 0 36px;
+      padding-right: 40px;
+      border-top: 2px solid var(--c-text);
+      position: relative;
+    }
+    .how-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--c-border);
+    }
+    .how-step-num {
+      font-family: var(--sans);
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      color: var(--c-border-dark);
+      margin-bottom: 28px;
+    }
+    .how-step-tag {
+      display: inline-block;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      border: 1px solid var(--c-border);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    /* keep .how-card for fallback — now unused visually */
+    .how-card {
+      background: var(--c-white); padding: 36px 28px;
+      transition: background var(--transition);
+    }
+    .how-card:hover { background: var(--c-surface2); }
+
+    .how-step-title { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; color: var(--c-text); margin-bottom: 10px; }
+    .how-step-desc { font-size: 0.82rem; color: var(--c-muted); line-height: 1.65; }
+
+    .how-num {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 700;
+      color: var(--c-border-dark); letter-spacing: 0.06em; margin-bottom: 24px;
+    }
+    .how-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--c-text); }
+    .how-desc { font-size: 0.85rem; color: var(--c-muted); line-height: 1.6; }
+
+    /* ═══════════════════════════════
+       USE CASES
+    ═══════════════════════════════ */
+    /* ── USE CASES editorial layout ── */
+    #usecases { background: var(--c-surface2); }
+
+    .cases-editorial {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 0;
+    }
+    .cases-big-text {
+      font-family: var(--sans);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--c-text);
+      margin-bottom: 36px;
+    }
+    /* Mini packaging snippet */
+    .cases-pkg-snippet {
+      background: var(--c-white);
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      padding: 20px 22px 16px;
+      max-width: 260px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .cases-pkg-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .cases-pkg-wordmark {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--c-text);
+    }
+    .cases-pkg-square {
+      width: 38px; height: 38px;
+      background: var(--c-black-pepper);
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+    }
+    .cases-pkg-square span {
+      display: block;
+      font-size: 0.42rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .cases-pkg-divider { height: 1px; background: var(--c-border); margin-bottom: 8px; }
+    .cases-pkg-macros {
+      font-size: 0.7rem;
+      color: var(--c-muted);
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .cases-pkg-macros strong { color: var(--c-text); font-weight: 700; }
+    .cases-pkg-sep { color: var(--c-border-dark); }
+
+    /* Right: editorial list */
+    .cases-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1.5px solid var(--c-text);
+    }
+    .case-row {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      gap: 20px;
+      align-items: baseline;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .case-row-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--c-border-dark);
+      padding-top: 3px;
+    }
+    .case-row-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+      margin-bottom: 4px;
+    }
+    .case-row-desc {
+      font-size: 0.8rem;
+      color: var(--c-muted);
+      line-height: 1.6;
+    }
+    /* hide old grid */
+    .cases-grid { display: none; }
+    .case-card { display: none; }
+    .case-num {} .case-title {} .case-desc {}
+
+    /* ═══════════════════════════════
+       ABOUT
+    ═══════════════════════════════ */
+    #about { background: var(--c-white); }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+    .about-photo {
+      border-radius: var(--radius-lg); overflow: hidden;
+      aspect-ratio: 3/4; position: relative;
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+    .about-photo-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    }
+    .about-photo-caption span {
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.7);
+    }
+
+    .about-values { display: flex; flex-direction: column; gap: 0; margin-top: 40px; border-top: 1px solid var(--c-border); }
+
+    .about-value {
+      display: flex; gap: 20px; padding: 24px 0;
+      border-bottom: 1px solid var(--c-border);
+      align-items: flex-start;
+    }
+    .about-value-num { font-family: var(--serif); font-size: 0.72rem; font-weight: 700; color: var(--c-border-dark); letter-spacing: 0.08em; min-width: 24px; padding-top: 3px; }
+    .about-value-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+    .about-value-desc { font-size: 0.875rem; color: var(--c-muted); line-height: 1.6; }
+
+    /* ═══════════════════════════════
+       FAQ
+    ═══════════════════════════════ */
+    #faq { background: var(--c-surface2); }
+
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 56px; }
+
+    .faq-list { display: flex; flex-direction: column; }
+
+    .faq-item { border-bottom: 1px solid var(--c-border); }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      font-family: var(--sans); font-size: 0.9rem; font-weight: 600;
+      color: var(--c-text); padding: 20px 0; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+      transition: color var(--transition);
+    }
+    .faq-q:hover { color: var(--c-muted); }
+    .faq-item.open .faq-q { color: var(--c-text); }
+
+    .faq-chevron { width: 18px; height: 18px; flex-shrink: 0; transition: transform var(--transition); color: var(--c-muted); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-a { font-size: 0.875rem; color: var(--c-muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease; }
+    .faq-item.open .faq-a { max-height: 280px; padding-bottom: 20px; }
+
+    .faq-contact-box {
+      background: var(--c-white); border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg); padding: 40px 36px;
+      display: flex; flex-direction: column; gap: 20px;
+      align-self: flex-start; position: sticky; top: 100px;
+    }
+
+    /* ═══════════════════════════════
+       BUSINESS
+    ═══════════════════════════════ */
+    #business { background: var(--c-text); }
+
+    .business-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+    .business-text .section-label { color: rgba(255,255,255,0.4); }
+    .business-text .section-title { color: #fff; }
+    .business-text .section-sub { color: rgba(255,255,255,0.55); }
+
+    .business-list { margin-top: 36px; display: flex; flex-direction: column; gap: 0; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    .business-item { display: flex; gap: 16px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .business-dash { font-family: var(--serif); font-size: 0.72rem; color: rgba(255,255,255,0.25); min-width: 16px; padding-top: 3px; }
+    .business-item-text { font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .business-item-text strong { color: rgba(255,255,255,0.95); }
+
+    .business-form-box {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-lg); padding: 40px 36px;
+    }
+
+    .form-title { font-family: var(--sans); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 28px; letter-spacing: -0.02em; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.45); margin-bottom: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; font-family: var(--sans); font-size: 0.875rem; color: #fff; outline: none;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); }
+    .form-group select option { background: #1C1917; }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* ═══════════════════════════════
+       CONTACT
+    ═══════════════════════════════ */
+    #contact { background: var(--c-white); }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+    .contact-channels { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+
+    .channel-card {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 24px; background: var(--c-surface2); border: 1px solid var(--c-border);
+      border-radius: var(--radius); text-decoration: none; color: var(--c-text);
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    .channel-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); background: #fff; }
+
+    .channel-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .channel-icon.wa { background: #DCFCE7; }
+    .channel-icon.ig { background: #FEE2E2; }
+    .channel-icon.tg { background: #EFF6FF; }
+    .channel-label { font-size: 0.72rem; color: var(--c-muted); margin-bottom: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
+    .channel-val { font-size: 0.95rem; font-weight: 600; }
+
+    .contact-info-box {
+      border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .contact-map-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .contact-map-embed {
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .contact-map-address {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--c-muted);
+      padding: 0 4px;
+    }
+    .contact-map-address svg { flex-shrink: 0; color: var(--c-text); }
+
+    /* keep for fallback */
+    .contact-img-wrap { aspect-ratio: 4/3; overflow: hidden; position: relative; }
+    .contact-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .contact-img-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 24px;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+    }
+    .contact-img-caption span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+    .contact-info-body { padding: 24px; background: var(--c-surface2); }
+    .contact-info-body p { font-size: 0.875rem; color: var(--c-muted); line-height: 1.7; }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer { background: var(--c-text); padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1120px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 32px; }
+    .footer-wordmark { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-desc { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.7; max-width: 240px; }
+    .footer-col-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.875rem; transition: color var(--transition); }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── FLOATING WA BUTTON ── */
+    .float-wa {
+      position: fixed; bottom: 24px; right: 24px; z-index: 50;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #16A34A; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(22,163,74,0.4);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .float-wa:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(22,163,74,0.5); }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 1024px) {
+      #hero-wrap::before { background-position: center center; }
+      #hero { grid-template-columns: 1fr; gap: 48px; padding: 140px 32px 80px; }
+      .hero-right { order: -1; }
+      .hero-label-card { max-width: 380px; }
+      .nutrition-grid, .about-grid, .faq-grid, .business-inner, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .how-steps { grid-template-columns: repeat(2, 1fr); }
+      .how-step:nth-child(2)::after { display: none; }
+      .cases-editorial { grid-template-columns: 1fr; gap: 48px; }
+      .cases-big-text { font-size: 2.8rem; }
+      .cases-pkg-snippet { max-width: 100%; }
+      .faq-contact-box { position: static; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      #hero-wrap::before { opacity: 0.15; }
+      #hero { padding: 130px 20px 72px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .how-steps { grid-template-columns: 1fr; }
+      .how-step::after { display: none; }
+      .how-header { flex-direction: column; align-items: flex-start; }
+      .cases-big-text { font-size: 2.2rem; }
+      section { padding: 72px 20px; }
+      .nutr-highlights { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-wordmark { font-size: 3.8rem; }
+      .hero-stats { gap: 0; }
+      .hero-stat { padding-right: 16px; margin-right: 16px; }
+      .hero-stat-num { font-size: 1.6rem; }
+      .nutr-cal-num { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Меню">
+  <button class="mobile-menu-close" aria-label="Закрыть" onclick="toggleMenu()">✕</button>
+  <a href="#products" onclick="toggleMenu()">Продукты</a>
+  <a href="#nutrition" onclick="toggleMenu()">Питание</a>
+  <a href="#how" onclick="toggleMenu()">Как есть</a>
+  <a href="#about" onclick="toggleMenu()">О нас</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#business" onclick="toggleMenu()">Для бизнеса</a>
+  <a href="#contact" onclick="toggleMenu()">Контакты</a>
+</div>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Основная навигация">
+  <a href="#" class="nav-logo" aria-label="Chicky">Chicky</a>
+  <ul class="nav-links" role="list">
+    <li><a href="#products">Продукты</a></li>
+    <li><a href="#nutrition">Питание</a></li>
+    <li><a href="#how">Как есть</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#business">Для бизнеса</a></li>
+    <li><a href="#contact" class="nav-cta">Заказать</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Открыть меню" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div id="hero-wrap">
+<section id="hero" aria-label="Главный экран">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Су-вид · Астана · Готово к употреблению</span>
+
+    <h1 class="hero-title">Куриная<br />грудка.<br />Уже готова.</h1>
+
+    <p class="hero-sub">
+      Натуральный продукт без компромиссов. Высокий белок, чистый состав, минимум действий — максимум качества.
+    </p>
+
+    <div class="hero-actions">
+      <a href="https://wa.me/971506801704?text=Привет! Хочу заказать Chicky" class="btn btn-wa" target="_blank" rel="noopener" aria-label="Заказать через WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.044L.787 23.418l4.549-1.457A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.032-1.39l-.36-.214-3.733 1.196 1.184-3.592-.235-.37A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182c5.427 0 9.818 4.391 9.818 9.818 0 5.427-4.391 9.818-9.818 9.818z"/></svg>
+        Заказать в WhatsApp
+      </a>
+      <a href="#products" class="btn btn-outline">Смотреть вкусы</a>
+    </div>
+
+    <div class="hero-stats" role="list" aria-label="Ключевые показатели на 100г">
+      <div class="hero-stat" role="listitem">
+        <div class="hero-stat-num">27г</div>
+        <div class="hero-stat-label">Белка</div>
+      </div>
+      <div class="hero-stat" role="listitem">
+        <div class="hero-stat-num">140</div>
+        <div class="hero-stat-label">Калорий</div>
+      </div>
+      <div class="hero-stat" role="listitem">
+        <div class="hero-stat-num">0г</div>
+        <div class="hero-stat-label">Сахара</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</div><!-- /hero-wrap -->
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">27г белка</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Су-вид</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">0г сахара</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Без консервантов</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Готово к употреблению</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Чёрный перец</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Паприка Чили</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Чеснок и травы</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Астана</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">27г белка</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Су-вид</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">0г сахара</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Без консервантов</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Готово к употреблению</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Чёрный перец</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Паприка Чили</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Чеснок и травы</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Астана</span><span class="marquee-sep">·</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products" aria-label="Продукты">
+  <div class="container">
+    <div class="products-header">
+      <div>
+        <p class="section-label reveal">Линейка продуктов</p>
+        <h2 class="section-title reveal">Три вкуса.<br />Один стандарт.</h2>
+      </div>
+      <a href="https://wa.me/971506801704?text=Хочу заказать Chicky" class="btn btn-primary reveal" target="_blank" rel="noopener">Заказать</a>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Black Pepper -->
+      <article class="product-card reveal" tabindex="0">
+        <div class="product-label">
+          <div class="product-label-top">
+            <div class="product-wordmark">Chicky</div>
+            <div class="product-flavor-sq" style="background: var(--c-black-pepper)">
+              <span>Куриная</span>
+              <span>грудка</span>
+              <span>су-вид</span>
+            </div>
+          </div>
+          <div class="product-label-divider" aria-hidden="true"></div>
+        </div>
+        <div class="product-photo">
+          <img src="images/photo-black-pepper.webp" alt="Chicky — Чёрный перец. Куриная грудка су-вид в вакуумной упаковке" loading="lazy" />
+        </div>
+        <div class="product-body">
+          <div class="product-name">Чёрный перец</div>
+          <p class="product-desc">Классическое сочетание. Сочная грудка с ароматом свежемолотого чёрного перца — чистый вкус без лишнего.</p>
+          <a href="https://wa.me/971506801704?text=Хочу заказать Chicky — Чёрный перец" class="product-cta" target="_blank" rel="noopener">
+            Заказать
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Paprika Chili -->
+      <article class="product-card reveal" style="transition-delay:0.1s" tabindex="0">
+        <div class="product-label">
+          <div class="product-label-top">
+            <div class="product-wordmark">Chicky</div>
+            <div class="product-flavor-sq" style="background: var(--c-paprika)">
+              <span>Куриная</span>
+              <span>грудка</span>
+              <span>су-вид</span>
+            </div>
+          </div>
+          <div class="product-label-divider" aria-hidden="true"></div>
+        </div>
+        <div class="product-photo">
+          <img src="images/photo-paprika-chili.webp" alt="Chicky — Паприка Чили. Куриная грудка су-вид в вакуумной упаковке" loading="lazy" />
+        </div>
+        <div class="product-body">
+          <div class="product-name">Паприка Чили</div>
+          <p class="product-desc">Насыщенная паприка и мягкий жар чили. Яркий вкус для тех, кто любит характер в еде.</p>
+          <a href="https://wa.me/971506801704?text=Хочу заказать Chicky — Паприка Чили" class="product-cta" target="_blank" rel="noopener">
+            Заказать
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Garlic & Herbs -->
+      <article class="product-card reveal" style="transition-delay:0.2s" tabindex="0">
+        <div class="product-label">
+          <div class="product-label-top">
+            <div class="product-wordmark">Chicky</div>
+            <div class="product-flavor-sq" style="background: var(--c-garlic)">
+              <span>Куриная</span>
+              <span>грудка</span>
+              <span>су-вид</span>
+            </div>
+          </div>
+          <div class="product-label-divider" aria-hidden="true"></div>
+        </div>
+        <div class="product-photo">
+          <img src="images/photo-garlic-herbs.webp" alt="Chicky — Чеснок и травы. Куриная грудка су-вид в вакуумной упаковке" loading="lazy" />
+        </div>
+        <div class="product-body">
+          <div class="product-name">Чеснок и травы</div>
+          <p class="product-desc">Деликатный чеснок с нотками прованских трав. Мягкий, универсальный — подходит для любого рациона.</p>
+          <a href="https://wa.me/971506801704?text=Хочу заказать Chicky — Чеснок и травы" class="product-cta" target="_blank" rel="noopener">
+            Заказать
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- NUTRITION -->
+<section id="nutrition" aria-label="Питательная ценность">
+  <div class="container">
+    <div class="nutrition-grid">
+
+      <!-- Nutrition label -->
+      <div class="reveal">
+        <div class="nutr-label-card" role="table" aria-label="Пищевая ценность на 100г продукта">
+          <div class="nutr-label-title">Пищевая ценность</div>
+          <div class="nutr-label-sub">На 100 г продукта</div>
+          <div class="nutr-label-calories">
+            <div>
+              <div class="nutr-cal-label">Калорийность</div>
+              <div class="nutr-cal-num">140</div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--c-muted); align-self:flex-end; padding-bottom:6px">ккал</div>
+          </div>
+          <div class="nutr-label-row major" role="row">
+            <span class="nutr-label-key" role="cell">Белки</span>
+            <span class="nutr-label-val" role="cell">27 г</span>
+          </div>
+          <div class="nutr-label-row" role="row">
+            <span class="nutr-label-key" role="cell">Жиры</span>
+            <span class="nutr-label-val" role="cell">2 г</span>
+          </div>
+          <div class="nutr-label-row" role="row" style="padding-left:16px">
+            <span class="nutr-label-key" style="font-weight:400; font-size:0.82rem" role="cell">— насыщенные</span>
+            <span class="nutr-label-val" role="cell">0.5 г</span>
+          </div>
+          <div class="nutr-label-row major" role="row">
+            <span class="nutr-label-key" role="cell">Углеводы</span>
+            <span class="nutr-label-val" role="cell">0 г</span>
+          </div>
+          <div class="nutr-label-row" role="row" style="padding-left:16px">
+            <span class="nutr-label-key" style="font-weight:400; font-size:0.82rem" role="cell">— сахара</span>
+            <span class="nutr-label-val" role="cell">0 г</span>
+          </div>
+          <div class="nutr-label-row" role="row">
+            <span class="nutr-label-key" role="cell">Клетчатка</span>
+            <span class="nutr-label-val" role="cell">0 г</span>
+          </div>
+          <div class="nutr-label-row" role="row">
+            <span class="nutr-label-key" role="cell">Соль</span>
+            <span class="nutr-label-val" role="cell">0.8 г</span>
+          </div>
+          <div class="nutr-label-footer">
+            Состав: куриная грудка, натуральные специи.<br />
+            Без консервантов · Без красителей · Без усилителей вкуса
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div class="nutrition-right">
+        <div>
+          <p class="section-label reveal">Состав</p>
+          <h2 class="section-title reveal">Только то,<br />что нужно</h2>
+          <p class="section-sub reveal">Куриная грудка и натуральные специи. Состав из двух ингредиентов — без добавок, без лишних слов.</p>
+        </div>
+
+        <div class="nutr-highlights reveal" role="list" aria-label="Ключевые показатели">
+          <div class="nutr-hl-card" role="listitem">
+            <div class="nutr-hl-num">27<span class="nutr-hl-unit">г</span></div>
+            <div class="nutr-hl-label">Белка</div>
+          </div>
+          <div class="nutr-hl-card" role="listitem">
+            <div class="nutr-hl-num">140</div>
+            <div class="nutr-hl-label">Калорий</div>
+          </div>
+          <div class="nutr-hl-card" role="listitem">
+            <div class="nutr-hl-num">0<span class="nutr-hl-unit">г</span></div>
+            <div class="nutr-hl-label">Сахара</div>
+          </div>
+          <div class="nutr-hl-card" role="listitem">
+            <div class="nutr-hl-num">2<span class="nutr-hl-unit">г</span></div>
+            <div class="nutr-hl-label">Жиров</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO EAT -->
+<section id="how" aria-label="Способ употребления">
+  <div class="container">
+
+    <div class="how-header">
+      <div class="how-header-left">
+        <p class="section-label reveal">Способ употребления</p>
+        <h2 class="section-title reveal" style="margin-bottom:0">Минимум<br>действий</h2>
+      </div>
+      <div class="how-header-right reveal">
+        <div class="how-label-snippet">
+          <strong>Уже готова</strong>
+          <span class="how-label-dot" aria-hidden="true"></span>
+          Открыть и съесть
+          <span class="how-label-dot" aria-hidden="true"></span>
+          Без нагрева
+        </div>
+      </div>
+    </div>
+
+    <div class="how-steps" role="list">
+
+      <div class="how-step reveal" role="listitem">
+        <div class="how-step-num" aria-hidden="true">01</div>
+        <div class="how-step-tag">Упаковка</div>
+        <h3 class="how-step-title">Вскройте упаковку</h3>
+        <p class="how-step-desc">Вакуумная упаковка сохраняет свежесть и аромат до момента вскрытия.</p>
+      </div>
+
+      <div class="how-step reveal" role="listitem" style="transition-delay:0.1s">
+        <div class="how-step-num" aria-hidden="true">02</div>
+        <div class="how-step-tag">Температура</div>
+        <h3 class="how-step-title">Холодная или тёплая</h3>
+        <p class="how-step-desc">Сразу из упаковки — или 60 секунд в микроволновке. Оба варианта правильные.</p>
+      </div>
+
+      <div class="how-step reveal" role="listitem" style="transition-delay:0.2s">
+        <div class="how-step-num" aria-hidden="true">03</div>
+        <div class="how-step-tag">Подача</div>
+        <h3 class="how-step-title">Самостоятельно или как основа</h3>
+        <p class="how-step-desc">В салат, боул, ролл — или просто отдельно. Нейтральный вкус специй не перебивает.</p>
+      </div>
+
+      <div class="how-step reveal" role="listitem" style="transition-delay:0.3s">
+        <div class="how-step-num" aria-hidden="true">04</div>
+        <div class="how-step-tag">Формат</div>
+        <h3 class="how-step-title">С собой</h3>
+        <p class="how-step-desc">В рюкзак, в машину, в спортивную сумку. Посуда и приборы — не обязательны.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases" aria-label="Для кого">
+  <div class="container">
+    <div class="cases-editorial reveal">
+
+      <!-- LEFT: big editorial + packaging snippet -->
+      <div class="cases-left">
+        <p class="section-label" style="margin-bottom:20px">Для кого</p>
+        <div class="cases-big-text">Для тех,<br>кто<br>ценит<br>время.</div>
+
+      </div>
+
+      <!-- RIGHT: editorial list -->
+      <div class="cases-list" role="list" aria-label="Сценарии использования">
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">01</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Спорт и тренировки</div>
+            <p class="case-row-desc">Готовый белковый продукт для закрытия белкового окна — без готовки и лотков. 27г сразу после тренировки.</p>
+          </div>
+        </div>
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">02</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Офис и рабочий день</div>
+            <p class="case-row-desc">Полноценный белковый обед прямо за рабочим столом. Без запаха, без лишних действий.</p>
+          </div>
+        </div>
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">03</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Контроль питания</div>
+            <p class="case-row-desc">Высокий белок при минимуме калорий. Помогает сохранить мышцы и поддерживать дефицит.</p>
+          </div>
+        </div>
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">04</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Учёба и студенчество</div>
+            <p class="case-row-desc">Готовый белковый продукт для спокойного ежедневного рациона — без кухни и лишнего времени.</p>
+          </div>
+        </div>
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">05</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Мил-преп</div>
+            <p class="case-row-desc">Срок хранения до 14 дней. Несколько упаковок — и рацион на неделю уже собран.</p>
+          </div>
+        </div>
+
+        <div class="case-row" role="listitem">
+          <span class="case-row-num">06</span>
+          <div class="case-row-body">
+            <div class="case-row-title">Семья и дети</div>
+            <p class="case-row-desc">Натуральный состав, два ингредиента. Для тех, кому важно знать, что внутри.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" aria-label="О компании">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <img src="images/photo-closeup.webp" alt="Chicky — куриная грудка су-вид крупным планом, вакуумная упаковка с каплями воды" />
+        <div class="about-photo-caption">
+          <span>Технология су-вид · Астана</span>
+        </div>
+      </div>
+
+      <div>
+        <p class="section-label reveal">О Chicky</p>
+        <h2 class="section-title reveal">Еда, которой<br />можно доверять</h2>
+        <p class="section-sub reveal">Мы создали Chicky, потому что верим: качественная еда не должна требовать усилий. Только хороший продукт — и больше ничего лишнего.</p>
+
+        <div class="about-values reveal">
+          <div class="about-value">
+            <div class="about-value-num">01</div>
+            <div>
+              <div class="about-value-title">Технология су-вид</div>
+              <div class="about-value-desc">Точная температура и вакуум — именно так достигается сочность, которую не дать обычная варка или запекание.</div>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-num">02</div>
+            <div>
+              <div class="about-value-title">Два ингредиента</div>
+              <div class="about-value-desc">Куриная грудка и натуральные специи. Состав, который можно прочитать за три секунды.</div>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-num">03</div>
+            <div>
+              <div class="about-value-title">Произведено в Астане</div>
+              <div class="about-value-desc">Локальное производство — это контроль на каждом этапе: от выбора сырья до финальной упаковки.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" aria-label="Частые вопросы">
+  <div class="container">
+    <div style="max-width:480px; margin-bottom:0">
+      <p class="section-label reveal">FAQ</p>
+      <h2 class="section-title reveal">Частые вопросы</h2>
+    </div>
+
+    <div class="faq-grid">
+      <div>
+        <div class="faq-list reveal" role="list">
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Это уже готовый продукт?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Да. Chicky полностью приготовлена методом су-вид и готова к употреблению прямо из упаковки — без дополнительной термической обработки. Можно есть холодной или разогреть по желанию.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Нужно ли хранить в холодильнике?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Да, Chicky хранится в холодильнике при температуре 0–+4°C. Срок хранения до 14 дней с момента производства. После вскрытия рекомендуем употребить в течение 24 часов.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Как долго хранится Chicky?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">До 14 дней в закрытой вакуумной упаковке при соблюдении температурного режима. Дата производства и срок годности указаны на упаковке.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Есть ли консерванты и добавки?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Нет. Состав: куриная грудка, натуральные специи. Срок хранения обеспечивается вакуумной упаковкой и технологией су-вид — без каких-либо добавок.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Подходит ли для кето и диеты?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Да. 0г углеводов, 0г сахара, 2г жира, 27г белка на 100г. Полностью совместима с кето, LCHF, интервальным голоданием и любым рационом с высоким содержанием белка.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Как разогреть?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Переложите на тарелку и разогрейте 60–90 секунд в микроволновке. Или опустите нераскрытую упаковку в горячую воду на 5 минут — способ, который лучше всего сохраняет сочность.</div>
+          </div>
+
+          <div class="faq-item" role="listitem">
+            <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+              Как заказать?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a" role="region">Напишите нам в WhatsApp или Instagram — укажите нужные вкусы и количество, и мы согласуем доставку. Работаем ежедневно с 8:00 до 22:00.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="faq-contact-box reveal">
+        <div>
+          <p class="section-label" style="margin-bottom:10px">Есть вопрос?</p>
+          <h3 class="section-title" style="font-size:1.5rem">Напишите нам</h3>
+          <p style="font-size:0.875rem; color:var(--c-muted); margin-top:10px; line-height:1.7">Ответим в течение нескольких минут. Ежедневно с 8:00 до 22:00.</p>
+        </div>
+        <a href="https://wa.me/971506801704?text=Привет! Есть вопрос про Chicky" class="btn btn-wa" target="_blank" rel="noopener" style="justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.044L.787 23.418l4.549-1.457A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.032-1.39l-.36-.214-3.733 1.196 1.184-3.592-.235-.37A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182c5.427 0 9.818 4.391 9.818 9.818 0 5.427-4.391 9.818-9.818 9.818z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://instagram.com/chicky.astana" class="btn btn-outline" target="_blank" rel="noopener" style="justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS -->
+<section id="business" aria-label="Для бизнеса">
+  <div class="container">
+    <div class="business-inner">
+      <div class="business-text">
+        <p class="section-label reveal">Для бизнеса</p>
+        <h2 class="section-title reveal">Оптовые поставки<br />и партнёрство</h2>
+        <p class="section-sub reveal">Работаем с ресторанами, спортивными клубами, магазинами здорового питания и корпоративными заказчиками.</p>
+
+        <div class="business-list reveal">
+          <div class="business-item">
+            <div class="business-dash">—</div>
+            <div class="business-item-text"><strong>Оптовые условия</strong> при заказе от 50 упаковок</div>
+          </div>
+          <div class="business-item">
+            <div class="business-dash">—</div>
+            <div class="business-item-text"><strong>Регулярные поставки</strong> — согласуем график и объёмы</div>
+          </div>
+          <div class="business-item">
+            <div class="business-dash">—</div>
+            <div class="business-item-text"><strong>Доставка по Астане</strong> включена при оптовом заказе</div>
+          </div>
+          <div class="business-item">
+            <div class="business-dash">—</div>
+            <div class="business-item-text"><strong>Полный пакет документов</strong> для HoReCa и ритейла</div>
+          </div>
+          <div class="business-item">
+            <div class="business-dash">—</div>
+            <div class="business-item-text">Обсуждаем <strong>индивидуальные форматы</strong> сотрудничества</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="business-form-box reveal">
+        <h3 class="form-title">Оставить заявку</h3>
+        <form onsubmit="handleBizForm(event)" novalidate>
+          <div class="form-group">
+            <label for="biz-name">Имя / Название компании</label>
+            <input type="text" id="biz-name" name="name" placeholder="ТОО «Здоровье»" required autocomplete="organization" />
+          </div>
+          <div class="form-group">
+            <label for="biz-phone">Телефон</label>
+            <input type="tel" id="biz-phone" name="phone" placeholder="+7 700 000 00 00" required autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label for="biz-type">Тип бизнеса</label>
+            <select id="biz-type" name="type">
+              <option value="">Выберите...</option>
+              <option>Ресторан / кафе</option>
+              <option>Фитнес-клуб / зал</option>
+              <option>Магазин / супермаркет</option>
+              <option>Корпоративный заказ</option>
+              <option>Другое</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="biz-msg">Комментарий</label>
+            <textarea id="biz-msg" name="message" placeholder="Объём, вопросы, пожелания..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; border-radius:8px; padding:14px">
+            Отправить заявку
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-label="Контакты">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <p class="section-label reveal">Контакты</p>
+        <h2 class="section-title reveal">Свяжитесь с нами</h2>
+        <p class="section-sub reveal">Заказ через удобный канал. Доставка по Астане ежедневно, 8:00–22:00.</p>
+
+        <div class="contact-channels reveal">
+          <a href="https://wa.me/971506801704?text=Привет! Хочу заказать Chicky" class="channel-card" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <div class="channel-icon wa" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#16A34A"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.044L.787 23.418l4.549-1.457A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.032-1.39l-.36-.214-3.733 1.196 1.184-3.592-.235-.37A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182c5.427 0 9.818 4.391 9.818 9.818 0 5.427-4.391 9.818-9.818 9.818z"/></svg>
+            </div>
+            <div>
+              <div class="channel-label">WhatsApp</div>
+              <div class="channel-val">+971 50 680 17 04</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8C5BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a href="https://instagram.com/chicky.astana" class="channel-card" target="_blank" rel="noopener" aria-label="Instagram @chicky.astana">
+            <div class="channel-icon ig" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </div>
+            <div>
+              <div class="channel-label">Instagram</div>
+              <div class="channel-val">@chicky.astana</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8C5BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        </div>
+
+        <div style="margin-top:20px; padding:18px 22px; border:1px solid var(--c-border); border-radius:var(--radius); font-size:0.85rem; color:var(--c-muted); line-height:1.7">
+          <strong style="color:var(--c-text); font-weight:600">Доставка по Астане</strong><br />
+          Ежедневно, 8:00–22:00. Минимальный заказ — 2 упаковки.
+        </div>
+      </div>
+
+      <div class="contact-map-box reveal">
+        <div class="contact-map-embed">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2872.3!2d71.42!3d51.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDEwJzQ4LjAiTiA3McKwMjUnMTIuMCJF!5e0!3m2!1sru!2skz!4v1700000000000&q=%D0%93%D0%B5%D0%B9%D0%B4%D0%B0%D1%80+%D0%90%D0%BB%D0%B8%D0%B5%D0%B2+3,+%D0%90%D1%81%D1%82%D0%B0%D0%BD%D0%B0"
+            width="100%"
+            height="100%"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Chicky — Астана, ул. Гейдар Алиева 3"
+            aria-label="Карта: Астана, ул. Гейдар Алиева 3"
+          ></iframe>
+        </div>
+        <div class="contact-map-address">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>ул. Гейдара Алиева, 3, Астана, Казахстан</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-wordmark">Chicky</div>
+        <p class="footer-desc">Су-вид куриная грудка. Готова к употреблению. 27г белка, 0г сахара. Астана, Казахстан.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Продукт</div>
+        <ul>
+          <li><a href="#products">Наши вкусы</a></li>
+          <li><a href="#nutrition">Состав</a></li>
+          <li><a href="#how">Как есть</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Компания</div>
+        <ul>
+          <li><a href="#about">О нас</a></li>
+          <li><a href="#usecases">Для кого</a></li>
+          <li><a href="#business">Для бизнеса</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Контакты</div>
+        <ul>
+          <li><a href="https://wa.me/971506801704" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://instagram.com/chicky.astana" target="_blank" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Chicky. Все права защищены. Астана, Казахстан.</span>
+      <span>Сделано с уважением к качеству</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/971506801704?text=Привет! Хочу заказать Chicky" class="float-wa" target="_blank" rel="noopener" aria-label="Заказать через WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.044L.787 23.418l4.549-1.457A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.032-1.39l-.36-.214-3.733 1.196 1.184-3.592-.235-.37A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182c5.427 0 9.818 4.391 9.818 9.818 0 5.427-4.391 9.818-9.818 9.818z"/></svg>
+</a>
+
+<script>
+  // SCROLL REVEAL
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq-q').setAttribute('aria-expanded','false'); });
+    if (!open) { item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  }
+
+  // MOBILE MENU
+  function toggleMenu() {
+    const m = document.getElementById('mobileMenu');
+    m.classList.toggle('open');
+    document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { const m = document.getElementById('mobileMenu'); if (m.classList.contains('open')) toggleMenu(); } });
+
+  // BUSINESS FORM
+  function handleBizForm(e) {
+    e.preventDefault();
+    const f = e.target;
+    const t = `Заявка от бизнеса:%0AКомпания: ${encodeURIComponent(f.name.value)}%0AТелефон: ${encodeURIComponent(f.phone.value)}%0AТип: ${encodeURIComponent(f.type.value)}%0AКомментарий: ${encodeURIComponent(f.message.value || '—')}`;
+    window.open(`https://wa.me/971506801704?text=${t}`, '_blank', 'noopener');
+  }
+
+  // NAVBAR ON SCROLL
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.boxShadow = window.scrollY > 50 ? '0 4px 32px rgba(0,0,0,0.1)' : '0 2px 20px rgba(0,0,0,0.06)';
+  }, { passive: true });
+</script>
+</body>
+</html>
